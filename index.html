@@ -1,0 +1,1816 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MoneyMind — Moliyaviy boshqaruv</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= AUTH ================= -->
+
+    <div class="auth-overlay" id="authOverlay">
+
+        <div class="auth-background">
+            <div class="fake-sidebar"></div>
+
+            <div class="fake-content">
+                <div class="fake-card"></div>
+                <div class="fake-card"></div>
+                <div class="fake-card"></div>
+            </div>
+        </div>
+
+        <div class="auth-card">
+
+            <div class="auth-logo">
+                <div class="logo-icon">₿</div>
+                <span>Money<span>Mind</span></span>
+            </div>
+
+            <div class="auth-title">
+                <h1 data-i18n="welcome">MoneyMind'ga xush kelibsiz!</h1>
+
+                <p data-i18n="authText">
+                    Moliyangizni boshqaring, maqsadlaringizga erishing
+                    va pulingizni aqlli sarflang.
+                </p>
+            </div>
+
+            <div class="auth-tabs">
+                <button id="loginTab" class="auth-tab active" data-i18n="login">
+                    Kirish
+                </button>
+
+                <button id="registerTab" class="auth-tab" data-i18n="register">
+                    Akkaunt yaratish
+                </button>
+            </div>
+
+            <form id="loginForm" class="auth-form">
+
+                <label data-i18n="phone">Telefon</label>
+
+                <input type="tel" id="loginPhone" placeholder="+998 90 123 45 67" required>
+
+                <button class="primary-btn full" type="submit">
+                    <span data-i18n="login">Kirish</span>
+                </button>
+
+                <div class="or-line">
+                    <span data-i18n="or">yoki</span>
+                </div>
+
+                <button type="button" class="google-btn" id="googleLogin">
+                    <b>G</b>
+                    <span data-i18n="google">
+                        Google orqali kirish
+                    </span>
+                </button>
+
+            </form>
+
+            <form id="registerForm" class="auth-form hidden">
+
+                <div class="form-row">
+
+                    <div>
+                        <label data-i18n="firstName">Ism</label>
+                        <input type="text" id="firstName" required>
+                    </div>
+
+                    <div>
+                        <label data-i18n="lastName">Familiya</label>
+                        <input type="text" id="lastName" required>
+                    </div>
+
+                </div>
+
+                <label data-i18n="phone">Telefon</label>
+
+                <input type="tel" id="registerPhone" placeholder="+998 90 123 45 67" required>
+
+                <button class="primary-btn full" type="submit">
+                    <span data-i18n="createAccount">
+                        Akkaunt yaratish
+                    </span>
+                </button>
+
+                <div class="or-line">
+                    <span data-i18n="or">yoki</span>
+                </div>
+
+                <button type="button" class="google-btn" id="googleRegister">
+                    <b>G</b>
+
+                    <span data-i18n="google">
+                        Google orqali kirish
+                    </span>
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand" id="brand" title="MoneyMind">
+
+            <div class="brand-icon">₿</div>
+
+            <span class="brand-text">
+                Money<span>Mind</span>
+            </span>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <button class="nav-item active" data-section="home">
+                <span class="nav-icon">⌂</span>
+                <span class="nav-text" data-i18n="home">
+                    Asosiy
+                </span>
+            </button>
+
+            <button class="nav-item" data-section="finance">
+                <span class="nav-icon">↕</span>
+
+                <span class="nav-text" data-i18n="incomeExpense">
+                    Daromad / Xarajat
+                </span>
+            </button>
+
+            <button class="nav-item" data-section="expenses">
+                <span class="nav-icon">▣</span>
+
+                <span class="nav-text" data-i18n="expenses">
+                    Xarajatlar
+                </span>
+            </button>
+
+            <!-- YANGI KALKULYATOR -->
+
+            <button class="nav-item" data-section="calculator">
+                <span class="nav-icon">🧮</span>
+
+                <span class="nav-text" data-i18n="calculator">
+                    Kalkulyator
+                </span>
+            </button>
+
+            <button class="nav-item" data-section="analysis">
+                <span class="nav-icon">◔</span>
+
+                <span class="nav-text" data-i18n="analysis">
+                    Tahlil
+                </span>
+            </button>
+
+            <button class="nav-item" data-section="quiz">
+                <span class="nav-icon">?</span>
+
+                <span class="nav-text" data-i18n="questions">
+                    Savollar
+                </span>
+            </button>
+
+            <button class="nav-item" data-section="challenge">
+                <span class="nav-icon">⚡</span>
+
+                <span class="nav-text" data-i18n="challenge">
+                    Challenge
+                </span>
+            </button>
+
+            <button class="nav-item" data-section="profile">
+                <span class="nav-icon">♙</span>
+
+                <span class="nav-text" data-i18n="profile">
+                    Profil
+                </span>
+            </button>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <button class="side-control" id="themeToggle">
+
+                <span>☼</span>
+
+                <span data-i18n="theme">
+                    Rejim
+                </span>
+
+            </button>
+
+            <select id="languageSelect" class="language-select">
+
+                <option value="uz">
+                    🇺🇿 O'zbek
+                </option>
+
+                <option value="ru">
+                    🇷🇺 Русский
+                </option>
+
+                <option value="en">
+                    🇬🇧 English
+                </option>
+
+            </select>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <div class="mobile-brand" id="mobileBrand">
+                ₿ MoneyMind
+            </div>
+
+            <div></div>
+
+            <button class="top-user" id="topUser">
+
+                <div class="avatar small" id="topAvatar">
+                    MM
+                </div>
+
+                <div class="top-user-info">
+
+                    <strong id="topUserName">
+                        Mehmon
+                    </strong>
+
+                    <small data-i18n="myAccount">
+                        Mening akkauntim
+                    </small>
+
+                </div>
+
+            </button>
+
+        </header>
+
+
+        <!-- ================= HOME ================= -->
+
+        <section class="page-section active-section" id="home">
+
+            <div class="hero">
+
+                <div class="hero-content">
+
+                    <span class="hero-badge">
+                        MONEY MIND
+                    </span>
+
+                    <h1 id="animatedHeroText">
+                        Pulingiz ustidan nazorat qiling.
+                    </h1>
+
+                    <p data-i18n="heroText">
+                        Daromadingizni boshqaring, xarajatlaringizni
+                        nazorat qiling va orzularingiz sari harakat qiling.
+                    </p>
+
+                    <div class="hero-buttons">
+
+                        <button class="primary-btn" data-section-link="finance">
+                            <span data-i18n="start">
+                                Boshlash
+                            </span>
+                            →
+                        </button>
+
+                        <button class="secondary-btn" data-section-link="expenses" id="homeDreamsBtn">
+
+                            💭
+
+                            <span data-i18n="myDreams">
+                                Orzularim
+                            </span>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="hero-graphic">
+
+                    <div class="money-orb">
+                        ₿
+                    </div>
+
+                    <div class="floating-money m1">
+                        +500 000
+                    </div>
+
+                    <div class="floating-money m2">
+                        −70 000
+                    </div>
+
+                    <div class="floating-money m3">
+                        +250 000
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="money-cards">
+
+                <div class="money-card income-card">
+
+                    <div class="money-card-top">
+
+                        <span data-i18n="income">
+                            Daromad
+                        </span>
+
+                        <div class="money-card-icon">
+                            ↑
+                        </div>
+
+                    </div>
+
+                    <strong id="incomeTotal">-</strong>
+
+                    <button class="card-action" data-open-money="income">
+                        +
+                        <span data-i18n="addIncome">
+                            Daromad qo'shish
+                        </span>
+                    </button>
+
+                </div>
+
+
+                <div class="money-card expense-card">
+
+                    <div class="money-card-top">
+
+                        <span data-i18n="expenses">
+                            Xarajat
+                        </span>
+
+                        <div class="money-card-icon">
+                            ↓
+                        </div>
+
+                    </div>
+
+                    <strong id="expenseTotal">-</strong>
+
+                    <button class="card-action" data-open-money="expense">
+                        +
+                        <span data-i18n="addExpense">
+                            Xarajat qo'shish
+                        </span>
+                    </button>
+
+                </div>
+
+
+                <div class="money-card balance-card">
+
+                    <div class="money-card-top">
+
+                        <span data-i18n="balance">
+                            Balans
+                        </span>
+
+                        <div class="money-card-icon">
+                            ₿
+                        </div>
+
+                    </div>
+
+                    <strong id="balanceTotal">-</strong>
+
+                    <small data-i18n="currentBalance">
+                        Hozirgi pulingiz
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-grid">
+
+                <div class="panel large-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <span class="eyebrow">
+                                MONEY
+                            </span>
+
+                            <h2 data-i18n="cashFlow">
+                                Pul oqimi
+                            </h2>
+                        </div>
+
+                        <span class="panel-icon">
+                            ↗
+                        </span>
+
+                    </div>
+
+                    <div class="chart-box">
+                        <canvas id="homeChart"></canvas>
+                    </div>
+
+                </div>
+
+
+                <div class="panel quick-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <span class="eyebrow">
+                                QUICK
+                            </span>
+
+                            <h2 data-i18n="quick">
+                                Tezkor
+                            </h2>
+                        </div>
+
+                    </div>
+
+                    <div class="quick-actions">
+
+                        <button class="quick-action" data-open-money="income">
+                            <span>↑</span>
+
+                            <b data-i18n="addIncome">
+                                Daromad qo'shish
+                            </b>
+                        </button>
+
+                        <button class="quick-action" data-open-money="expense">
+                            <span>↓</span>
+
+                            <b data-i18n="addExpense">
+                                Xarajat qo'shish
+                            </b>
+                        </button>
+
+                        <button class="quick-action" id="homeAddDream">
+                            <span>💭</span>
+
+                            <b data-i18n="addDream">
+                                Orzu qo'shish
+                            </b>
+                        </button>
+
+                        <button class="quick-action" data-section-link="analysis">
+                            <span>◔</span>
+
+                            <b data-i18n="analysis">
+                                Tahlil
+                            </b>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="panel recent-panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <span class="eyebrow">
+                            HISTORY
+                        </span>
+
+                        <h2 data-i18n="transactions">
+                            Tranzaksiyalar
+                        </h2>
+                    </div>
+
+                    <button class="text-btn" data-section-link="finance">
+                        <span data-i18n="history">
+                            Tarix
+                        </span>
+                        →
+                    </button>
+
+                </div>
+
+                <div id="transactionsList"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= FINANCE ================= -->
+
+        <section class="page-section" id="finance">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="eyebrow">
+                        FINANCE
+                    </span>
+
+                    <h1 data-i18n="incomeExpenseTitle">
+                        Daromad va xarajatlar
+                    </h1>
+
+                    <p data-i18n="expenseDescription">
+                        Pulingiz qaysi yo'nalishga ketayotganini kuzating.
+                    </p>
+
+                </div>
+
+                <button class="primary-btn" data-open-money="income">
+                    +
+                    <span data-i18n="addIncome">
+                        Daromad qo'shish
+                    </span>
+                </button>
+
+            </div>
+
+
+            <div class="money-cards">
+
+                <div class="stat-card">
+                    <span data-i18n="totalIncome">
+                        Jami daromad
+                    </span>
+
+                    <strong id="financeIncome">-</strong>
+                </div>
+
+                <div class="stat-card">
+                    <span data-i18n="totalExpense">
+                        Jami xarajat
+                    </span>
+
+                    <strong id="financeExpense">-</strong>
+                </div>
+
+                <div class="stat-card">
+                    <span data-i18n="balance">
+                        Balans
+                    </span>
+
+                    <strong id="financeBalance">-</strong>
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <span class="eyebrow">
+                            HISTORY
+                        </span>
+
+                        <h2 data-i18n="transactions">
+                            Tranzaksiyalar
+                        </h2>
+
+                    </div>
+
+                    <button class="secondary-btn" data-open-money="expense">
+                        +
+                        <span data-i18n="addExpense">
+                            Xarajat
+                        </span>
+                    </button>
+
+                </div>
+
+                <div id="financeTransactionsList"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= EXPENSES ================= -->
+
+        <section class="page-section" id="expenses">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="eyebrow">
+                        EXPENSES
+                    </span>
+
+                    <h1 data-i18n="expenses">
+                        Xarajatlar
+                    </h1>
+
+                    <p data-i18n="expenseDescription">
+                        Pulingiz qaysi yo'nalishga ketayotganini kuzating.
+                    </p>
+
+                </div>
+
+                <button class="primary-btn" data-open-money="expense">
+                    +
+                    <span data-i18n="addExpense">
+                        Xarajat qo'shish
+                    </span>
+                </button>
+
+            </div>
+
+
+            <div class="expense-categories">
+
+                <button class="expense-category" data-expense-filter="food">
+                    <span class="category-icon">🍔</span>
+                    <b data-i18n="food">Oziq-ovqat</b>
+                    <strong id="cat-food">0 so'm</strong>
+                </button>
+
+                <button class="expense-category" data-expense-filter="utilities">
+                    <span class="category-icon">💡</span>
+                    <b data-i18n="utilities">Kommunal</b>
+                    <strong id="cat-utilities">0 so'm</strong>
+                </button>
+
+                <button class="expense-category" data-expense-filter="fuel">
+                    <span class="category-icon">⛽</span>
+                    <b data-i18n="fuel">Benzin / Gaz</b>
+                    <strong id="cat-fuel">0 so'm</strong>
+                </button>
+
+                <button class="expense-category" data-expense-filter="transport">
+                    <span class="category-icon">🚌</span>
+                    <b data-i18n="transport">
+                        Transport / Yo'l haqi
+                    </b>
+                    <strong id="cat-transport">0 so'm</strong>
+                </button>
+
+                <button class="expense-category" data-expense-filter="travel">
+                    <span class="category-icon">✈️</span>
+                    <b data-i18n="travel">
+                        Sayohatlar
+                    </b>
+                    <strong id="cat-travel">0 so'm</strong>
+                </button>
+
+                <button class="expense-category" data-expense-filter="recreation">
+                    <span class="category-icon">🎮</span>
+                    <b data-i18n="recreation">
+                        Dam olishlar
+                    </b>
+                    <strong id="cat-recreation">0 so'm</strong>
+                </button>
+
+                <button class="expense-category" data-expense-filter="health">
+                    <span class="category-icon">💊</span>
+                    <b data-i18n="health">
+                        Sog'liq
+                    </b>
+                    <strong id="cat-health">0 so'm</strong>
+                </button>
+
+                <button class="expense-category dream-expense-card" data-expense-filter="dreams"
+                    id="dreamExpenseCategory">
+
+                    <span class="category-icon">
+                        💭
+                    </span>
+
+                    <b data-i18n="dreams">
+                        Orzular
+                    </b>
+
+                    <strong id="cat-dreams">
+                        0 so'm
+                    </strong>
+
+                </button>
+
+                <button class="expense-category" data-expense-filter="other">
+                    <span class="category-icon">📦</span>
+                    <b data-i18n="other">
+                        Boshqalar
+                    </b>
+                    <strong id="cat-other">
+                        0 so'm
+                    </strong>
+                </button>
+
+            </div>
+
+
+            <!-- DREAMS INSIDE EXPENSES -->
+
+            <div class="dreams-inside-expenses hidden" id="dreamsInsideExpenses">
+
+                <div class="dream-section-header">
+
+                    <div>
+
+                        <span class="eyebrow">
+                            GOALS
+                        </span>
+
+                        <h2 data-i18n="goals">
+                            Maqsadlar
+                        </h2>
+
+                        <p data-i18n="dreamDescription">
+                            Katta orzularingizni kichik qadamlar
+                            bilan amalga oshiring.
+                        </p>
+
+                    </div>
+
+                    <button class="primary-btn" id="openDreamModal">
+                        +
+                        <span data-i18n="addDream">
+                            Orzu qo'shish
+                        </span>
+                    </button>
+
+                </div>
+
+                <div id="dreamsGrid" class="dreams-grid"></div>
+
+            </div>
+
+
+            <div class="dashboard-grid expense-main-grid">
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <span class="eyebrow">
+                                SPENDING
+                            </span>
+
+                            <h2 data-i18n="whereMoney">
+                                Pul qayerga ketmoqda?
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+                    <div class="chart-box">
+                        <canvas id="expenseChart"></canvas>
+                    </div>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <span class="eyebrow">
+                                HISTORY
+                            </span>
+
+                            <h2 data-i18n="expenseHistory">
+                                Xarajatlar tarixi
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+                    <div id="expenseHistoryList"></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= CALCULATOR ================= -->
+
+        <section class="page-section" id="calculator">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="eyebrow">
+                        CALCULATOR
+                    </span>
+
+                    <h1 data-i18n="calculator">
+                        Kalkulyator
+                    </h1>
+
+                    <p data-i18n="calculatorText">
+                        Hisob-kitoblaringizni tez va qulay bajaring.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="calculator-wrapper">
+
+                <div class="calculator">
+
+                    <div class="calculator-display">
+
+                        <div id="calculatorExpression">
+                            0
+                        </div>
+
+                        <strong id="calculatorResult">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="calculator-buttons">
+
+                        <button class="calc-btn calc-clear" data-calc="clear">
+                            C
+                        </button>
+
+                        <button class="calc-btn" data-calc="backspace">
+                            ⌫
+                        </button>
+
+                        <button class="calc-btn calc-operation" data-calc="/">
+                            ÷
+                        </button>
+
+                        <button class="calc-btn calc-operation" data-calc="*">
+                            ×
+                        </button>
+
+
+                        <button class="calc-btn" data-calc="7">
+                            7
+                        </button>
+
+                        <button class="calc-btn" data-calc="8">
+                            8
+                        </button>
+
+                        <button class="calc-btn" data-calc="9">
+                            9
+                        </button>
+
+                        <button class="calc-btn calc-operation" data-calc="-">
+                            −
+                        </button>
+
+
+                        <button class="calc-btn" data-calc="4">
+                            4
+                        </button>
+
+                        <button class="calc-btn" data-calc="5">
+                            5
+                        </button>
+
+                        <button class="calc-btn" data-calc="6">
+                            6
+                        </button>
+
+                        <button class="calc-btn calc-operation" data-calc="+">
+                            +
+                        </button>
+
+
+                        <button class="calc-btn" data-calc="1">
+                            1
+                        </button>
+
+                        <button class="calc-btn" data-calc="2">
+                            2
+                        </button>
+
+                        <button class="calc-btn" data-calc="3">
+                            3
+                        </button>
+
+                        <button class="calc-btn calc-equal" data-calc="=">
+                            =
+                        </button>
+
+
+                        <button class="calc-btn calc-zero" data-calc="0">
+                            0
+                        </button>
+
+                        <button class="calc-btn" data-calc=".">
+                            .
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= ANALYSIS ================= -->
+
+        <section class="page-section" id="analysis">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="eyebrow">
+                        ANALYTICS
+                    </span>
+
+                    <h1 data-i18n="statistics">
+                        Statistika
+                    </h1>
+
+                    <p data-i18n="expenseDescription">
+                        Pulingiz qaysi yo'nalishga ketayotganini kuzating.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="money-cards">
+
+                <div class="stat-card">
+
+                    <span data-i18n="totalIncome">
+                        Jami daromad
+                    </span>
+
+                    <strong id="analysisIncome">-</strong>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <span data-i18n="totalExpense">
+                        Jami xarajat
+                    </span>
+
+                    <strong id="analysisExpense">-</strong>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <span data-i18n="balance">
+                        Balans
+                    </span>
+
+                    <strong id="analysisBalance">-</strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-grid">
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <span class="eyebrow">
+                                FLOW
+                            </span>
+
+                            <h2 data-i18n="moneyFlow">
+                                Pul oqimi
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+                    <div class="chart-box tall">
+                        <canvas id="analysisChart"></canvas>
+                    </div>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <span class="eyebrow">
+                                STRUCTURE
+                            </span>
+
+                            <h2 data-i18n="expenseStructure">
+                                Xarajat tarkibi
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+                    <div class="chart-box tall">
+                        <canvas id="analysisExpenseChart"></canvas>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= QUIZ ================= -->
+
+        <section class="page-section" id="quiz">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="eyebrow">
+                        KNOWLEDGE
+                    </span>
+
+                    <h1 data-i18n="knowledge">
+                        Bilim
+                    </h1>
+
+                    <p>
+                        Moliyaviy savodxonligingizni tekshiring.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="quiz-card panel">
+
+                <div class="quiz-top">
+
+                    <span id="quizCounter">
+                        01 / 03
+                    </span>
+
+                    <span class="quiz-label">
+                        MONEY QUIZ
+                    </span>
+
+                </div>
+
+                <h2 id="quizQuestion"></h2>
+
+                <div class="quiz-options" id="quizOptions"></div>
+
+                <div class="quiz-result hidden" id="quizResult"></div>
+
+                <button class="primary-btn hidden" id="nextQuestion">
+
+                    <span data-i18n="next">
+                        Keyingi savol
+                    </span>
+
+                    →
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= CHALLENGE ================= -->
+
+        <section class="page-section" id="challenge">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="eyebrow">
+                        MONEY CHALLENGE
+                    </span>
+
+                    <h1 data-i18n="challenge">
+                        Challenge
+                    </h1>
+
+                    <p>
+                        Har kuni kichik odat — katta natija.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="challenge-grid">
+
+                <div class="challenge-card">
+
+                    <div class="challenge-icon">
+                        🔥
+                    </div>
+
+                    <span class="challenge-small">
+                        <span data-i18n="challengeSmall">
+                            Sinov
+                        </span>
+                    </span>
+
+                    <h2 data-i18n="challenge1">
+                        7 kun keraksiz xarajatsiz
+                    </h2>
+
+                    <p data-i18n="challenge1Text">
+                        7 kun davomida faqat zarur
+                        narsalarga pul sarflang.
+                    </p>
+
+                    <div class="challenge-progress-wrap">
+
+                        <div class="challenge-progress-info">
+
+                            <span id="challengeDays">
+                                0 / 7
+                            </span>
+
+                            <span id="challengeTimer">
+                                -
+                            </span>
+
+                        </div>
+
+                        <div class="progress-track">
+
+                            <div class="progress-bar" id="challengeProgress">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <button class="primary-btn full" id="challengeButton">
+
+                        <span data-i18n="join">
+                            Qatnashish
+                        </span>
+
+                    </button>
+
+                </div>
+
+
+                <div class="challenge-card">
+
+                    <div class="challenge-icon">
+                        💰
+                    </div>
+
+                    <span class="challenge-small">
+                        DAILY SAVING
+                    </span>
+
+                    <h2 data-i18n="challenge2">
+                        Har kuni jamg'ar
+                    </h2>
+
+                    <p data-i18n="challenge2Text">
+                        Har kuni kichik summa ajrating.
+                    </p>
+
+                    <div class="saving-total">
+
+                        <span>
+                            Saved
+                        </span>
+
+                        <strong id="challengeSaved">
+                            0 so'm
+                        </strong>
+
+                    </div>
+
+                    <button class="secondary-btn full" id="saveChallengeBtn">
+
+                        + 10 000 so'm
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= PROFILE ================= -->
+
+        <section class="page-section" id="profile">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="eyebrow">
+                        ACCOUNT
+                    </span>
+
+                    <h1 data-i18n="profile">
+                        Profil
+                    </h1>
+
+                    <p>
+                        Akkauntingiz va shaxsiy ma'lumotlaringiz.
+                    </p>
+
+                </div>
+
+                <button class="primary-btn" id="editProfileBtn">
+
+                    ✎
+
+                    <span data-i18n="edit">
+                        Tahrirlash
+                    </span>
+
+                </button>
+
+            </div>
+
+
+            <div class="profile-grid">
+
+                <div class="panel profile-card">
+
+                    <div class="profile-avatar" id="profileAvatar">
+                        MM
+                    </div>
+
+                    <h2 id="profileName">
+                        Mehmon
+                    </h2>
+
+                    <span class="profile-role">
+                        MoneyMind User
+                    </span>
+
+                    <div class="profile-info-list">
+
+                        <div>
+
+                            <span data-i18n="firstName">
+                                Ism
+                            </span>
+
+                            <strong id="profileFirstName">
+                                -
+                            </strong>
+
+                        </div>
+
+                        <div>
+
+                            <span data-i18n="lastName">
+                                Familiya
+                            </span>
+
+                            <strong id="profileLastName">
+                                -
+                            </strong>
+
+                        </div>
+
+                        <div>
+
+                            <span data-i18n="phone">
+                                Telefon
+                            </span>
+
+                            <strong id="profilePhone">
+                                -
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <span class="eyebrow">
+                                ACCOUNT
+                            </span>
+
+                            <h2 data-i18n="account">
+                                Akkaunt
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-actions">
+
+                        <button class="profile-action" id="switchAccountBtn">
+
+                            <span>⇄</span>
+
+                            <div>
+
+                                <b data-i18n="switchAccount">
+                                    Akkauntni almashtirish
+                                </b>
+
+                                <small>
+                                    Boshqa akkauntga o'tish
+                                </small>
+
+                            </div>
+
+                        </button>
+
+
+                        <button class="profile-action" id="newAccountBtn">
+
+                            <span>＋</span>
+
+                            <div>
+
+                                <b data-i18n="newAccount">
+                                    Yangi akkaunt
+                                </b>
+
+                                <small>
+                                    Yangi profil yaratish
+                                </small>
+
+                            </div>
+
+                        </button>
+
+
+                        <button class="profile-action danger-action" id="deleteAccountBtn">
+
+                            <span>🗑</span>
+
+                            <div>
+
+                                <b data-i18n="deleteAccount">
+                                    Akkauntni o'chirish
+                                </b>
+
+                                <small>
+                                    Akkaunt va uning ma'lumotlarini
+                                    o'chirish
+                                </small>
+
+                            </div>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= MONEY MODAL ================= -->
+
+    <div class="modal-overlay" id="moneyModal">
+
+        <div class="modal">
+
+            <button class="modal-close" data-close="moneyModal">
+                ×
+            </button>
+
+            <div class="modal-icon">
+                ₿
+            </div>
+
+            <h2 id="moneyModalTitle">
+                Daromad qo'shish
+            </h2>
+
+            <p data-i18n="moneyModalText">
+                Summani kiriting va ma'lumotlaringizni saqlang.
+            </p>
+
+            <form id="moneyForm">
+
+                <div id="expenseCategoryWrapper" class="hidden">
+
+                    <label data-i18n="category">
+                        Kategoriya
+                    </label>
+
+                    <select id="expenseCategory">
+
+                        <option value="food" data-i18n="food">
+                            Oziq-ovqat
+                        </option>
+
+                        <option value="utilities" data-i18n="utilities">
+                            Kommunal
+                        </option>
+
+                        <option value="fuel" data-i18n="fuel">
+                            Benzin / Gaz
+                        </option>
+
+                        <option value="transport" data-i18n="transport">
+                            Transport / Yo'l haqi
+                        </option>
+
+                        <option value="travel" data-i18n="travel">
+                            Sayohatlar
+                        </option>
+
+                        <option value="recreation" data-i18n="recreation">
+                            Dam olishlar
+                        </option>
+
+                        <option value="health" data-i18n="health">
+                            Sog'liq
+                        </option>
+
+                        <option value="dreams" data-i18n="dreams">
+                            Orzular
+                        </option>
+
+                        <option value="other" data-i18n="other">
+                            Boshqalar
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <label data-i18n="amount">
+                    Summa
+                </label>
+
+                <input type="number" id="moneyAmount" min="1" step="1000" required>
+
+
+                <label data-i18n="description">
+                    Izoh
+                </label>
+
+                <input type="text" id="moneyDescription" data-i18n-placeholder="descriptionPlaceholder"
+                    placeholder="Masalan: Oylik maosh">
+
+
+                <button type="submit" class="primary-btn full">
+
+                    <span data-i18n="save">
+                        Saqlash
+                    </span>
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= DREAM MODAL ================= -->
+
+    <div class="modal-overlay" id="dreamModal">
+
+        <div class="modal">
+
+            <button class="modal-close" data-close="dreamModal">
+                ×
+            </button>
+
+            <div class="modal-icon">
+                💭
+            </div>
+
+            <h2 data-i18n="newDream">
+                Yangi orzu
+            </h2>
+
+            <p data-i18n="dreamModalText">
+                Orzuingiz uchun maqsad summa belgilang.
+            </p>
+
+            <form id="dreamForm">
+
+                <label data-i18n="dreamName">
+                    Orzu nomi
+                </label>
+
+                <input type="text" id="dreamName" required>
+
+
+                <label data-i18n="dreamType">
+                    Orzu turi
+                </label>
+
+                <select id="dreamType">
+
+                    <option value="car" data-i18n="car">
+                        🚗 Mashina
+                    </option>
+
+                    <option value="home" data-i18n="homeGoal">
+                        🏠 Uy-joy
+                    </option>
+
+                    <option value="travel" data-i18n="travelGoal">
+                        ✈️ Sayohat
+                    </option>
+
+                    <option value="education" data-i18n="education">
+                        🎓 Ta'lim
+                    </option>
+
+                    <option value="other" data-i18n="other">
+                        ✨ Boshqa
+                    </option>
+
+                </select>
+
+
+                <label data-i18n="targetAmount">
+                    Kerakli summa
+                </label>
+
+                <input type="number" id="dreamTarget" min="1" step="1000" required>
+
+
+                <label data-i18n="savedAmount">
+                    Hozirgacha yig'ilgan
+                </label>
+
+                <input type="number" id="dreamSaved" min="0" step="1000" value="0">
+
+
+                <button type="submit" class="primary-btn full">
+
+                    <span data-i18n="createDream">
+                        Orzu yaratish
+                    </span>
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= DREAM TOPUP MODAL ================= -->
+
+    <div class="modal-overlay" id="dreamTopupModal">
+
+        <div class="modal">
+
+            <button class="modal-close" data-close="dreamTopupModal">
+                ×
+            </button>
+
+            <div class="modal-icon">
+                💰
+            </div>
+
+            <h2 data-i18n="addToDream">
+                Orzuga pul qo'shish
+            </h2>
+
+            <p id="dreamTopupDescription"></p>
+
+            <form id="dreamTopupForm">
+
+                <label data-i18n="amount">
+                    Summa
+                </label>
+
+                <input type="number" id="dreamTopupAmount" min="1" step="1000" required>
+
+                <button class="primary-btn full" type="submit">
+
+                    <span data-i18n="save">
+                        Saqlash
+                    </span>
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= PROFILE MODAL ================= -->
+
+    <div class="modal-overlay" id="profileModal">
+
+        <div class="modal">
+
+            <button class="modal-close" data-close="profileModal">
+                ×
+            </button>
+
+            <div class="edit-avatar" id="editAvatar">
+                MM
+            </div>
+
+            <h2 data-i18n="editProfile">
+                Profilni tahrirlash
+            </h2>
+
+            <form id="profileForm">
+
+                <label data-i18n="firstName">
+                    Ism
+                </label>
+
+                <input id="editFirstName" required>
+
+                <label data-i18n="lastName">
+                    Familiya
+                </label>
+
+                <input id="editLastName" required>
+
+                <label data-i18n="phone">
+                    Telefon
+                </label>
+
+                <input id="editPhone" required>
+
+                <label data-i18n="changePhoto">
+                    Rasmni o'zgartirish
+                </label>
+
+                <input type="file" id="profilePhoto" accept="image/*">
+
+                <button type="submit" class="primary-btn full">
+
+                    <span data-i18n="saveChanges">
+                        O'zgarishlarni saqlash
+                    </span>
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= ACCOUNTS MODAL ================= -->
+
+    <div class="modal-overlay" id="accountsModal">
+
+        <div class="modal accounts-modal">
+
+            <button class="modal-close" data-close="accountsModal">
+                ×
+            </button>
+
+            <h2 data-i18n="accounts">
+                Akkauntlar
+            </h2>
+
+            <div id="accountsList"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= DELETE ACCOUNT MODAL ================= -->
+
+    <div class="modal-overlay" id="deleteAccountModal">
+
+        <div class="modal small-modal">
+
+            <button class="modal-close" data-close="deleteAccountModal">
+                ×
+            </button>
+
+            <div class="modal-icon danger-modal-icon">
+                ⚠️
+            </div>
+
+            <h2 data-i18n="deleteAccountTitle">
+                Akkauntni o'chirish
+            </h2>
+
+            <p data-i18n="deleteConfirm">
+                Haqiqatan ham ushbu akkauntni o'chirmoqchimisiz?
+                Barcha ma'lumotlar o'chiriladi.
+            </p>
+
+            <div class="delete-modal-actions">
+
+                <button type="button" class="secondary-btn" id="cancelDeleteAccount" data-i18n="no">
+                    Yo'q
+                </button>
+
+                <button type="button" class="danger-btn" id="confirmDeleteAccount" data-i18n="yesDelete">
+                    Ha, o'chirish
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= TOAST ================= -->
+
+    <div class="toast" id="toast"></div>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
